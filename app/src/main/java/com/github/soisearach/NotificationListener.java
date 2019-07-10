@@ -11,6 +11,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.util.List;
+import java.util.Objects;
 
 public class NotificationListener extends NotificationListenerService {
 
@@ -30,7 +31,7 @@ public class NotificationListener extends NotificationListenerService {
 
         if (extras.containsKey("android.text")) {
             if (extras.getCharSequence("android.text") != null) {
-                String text = extras.getCharSequence("android.text").toString();
+                String text = Objects.requireNonNull(extras.getCharSequence("android.text")).toString();
                 notification.setText(text);
             }
         }
