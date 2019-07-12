@@ -1,11 +1,11 @@
 package com.github.soisearach;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
-import android.widget.Toast;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -13,7 +13,7 @@ import retrofit2.Response;
 import java.util.List;
 import java.util.Objects;
 
-public class NotificationListener extends NotificationListenerService {
+public class MyNotifListener extends NotificationListenerService {
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -23,23 +23,26 @@ public class NotificationListener extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
 
-        Notification notification = new Notification();
-        notification.setTickerText(sbn.getNotification().tickerText.toString());
+        MyNotification myNotification = new MyNotification();
+        Notification sbnNotification = sbn.getNotification();
+        if (sbnNotification.tickerText != null) {
+            myNotification.setTickerText(sbnNotification.tickerText.toString());
+        }
 
 
-        Bundle extras = sbn.getNotification().extras;
+        Bundle extras = sbnNotification.extras;
 
         if (extras.containsKey("android.text")) {
             if (extras.getCharSequence("android.text") != null) {
                 String text = Objects.requireNonNull(extras.getCharSequence("android.text")).toString();
-                notification.setText(text);
+                myNotification.setText(text);
             }
         }
         if (extras.containsKey("android.title")) {
-            notification.setTitle(extras.getString("android.title"));
+            myNotification.setTitle(extras.getString("android.title"));
         }
 
-        RetrofitInterface.getApi().putData(notification).enqueue(new Callback<List<AnswerData<String>>>() {
+        RetrofitInterface.getApi().putData(myNotification).enqueue(new Callback<List<AnswerData<String>>>() {
             @Override
             public void onResponse(Call<List<AnswerData<String>>> call, Response<List<AnswerData<String>>> response) {
 

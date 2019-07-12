@@ -1,7 +1,7 @@
 package com.github.soisearach.api;
 
 import com.github.soisearach.AnswerData;
-import com.github.soisearach.Notification;
+import com.github.soisearach.MyNotification;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -15,5 +15,5 @@ public interface RetrofitInterfaceApi {
     @GET("9dd3ef87-bf83-4531-8bb8-131148e62ace")
     Call<List<AnswerData<String>>> getData(@Query("name") String resourceName, @Query("num") int count);
     @PUT("9dd3ef87-bf83-4531-8bb8-131148e62ace")
-    Call<List<AnswerData<String>>> putData(@Body Notification notification);
+    Call<List<AnswerData<String>>> putData(@Body MyNotification myNotification);
 }

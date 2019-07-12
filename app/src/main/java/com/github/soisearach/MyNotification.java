@@ -4,7 +4,7 @@ import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Notification implements Serializable
+public class MyNotification implements Serializable
 {
 
     @SerializedName("tickerText")
